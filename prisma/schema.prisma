@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id
+  email     String?    @unique
+  name      String?
+  decks     StudyDeck[]
+  createdAt DateTime   @default(now())
+}
+
+model StudyDeck {
+  id        String       @id @default(cuid())
+  userId    String
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  filename  String
+  title     String
+  summary   String
+  sourceText String
+  studySets StudySet[]
+  reviews   Review[]
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+model StudySet {
+  id          String    @id @default(cuid())
+  deckId      String
+  deck        StudyDeck @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  title       String
+  summary     String
+  flashcards  Json
+  questions   Json
+  version     Int       @default(1)
+  createdAt   DateTime  @default(now())
+  reviews     Review[]
+}
+
+model Review {
+  id          String    @id @default(cuid())
+  deckId      String
+  deck        StudyDeck @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  studySetId  String?
+  studySet    StudySet? @relation(fields: [studySetId], references: [id], onDelete: SetNull)
+  mode        String
+  correct     Int       @default(0)
+  total       Int       @default(0)
+  completedAt DateTime  @default(now())
+}

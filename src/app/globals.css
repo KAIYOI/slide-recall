@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root { --font-geist: 'DM Sans'; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #f7f8f4; color: #17221d; font-family: 'DM Sans', sans-serif; }
+button, input { font: inherit; }
+::selection { background: #d6f66a; color: #17221d; }
+.grid-paper { background-image: linear-gradient(rgba(36,77,59,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(36,77,59,.035) 1px,transparent 1px); background-size: 48px 48px; }
+.flip-scene { perspective: 1200px; }
+.flip-card { transform-style: preserve-3d; transition: transform .65s cubic-bezier(.2,.7,.2,1); }
+.flip-card.is-flipped { transform: rotateY(180deg); }
+.flip-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.flip-back { transform: rotateY(180deg); }
